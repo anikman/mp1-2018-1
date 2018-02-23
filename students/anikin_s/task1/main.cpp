@@ -9,12 +9,12 @@ using namespace std;
 class TFraction
 {
 private:
-	double num1; //числитель первой дроби
-	double denom1; //знаменатель первой дроби
-	double num2; //числитель второй дроби
-	double denom2; //знаменатель второй дроби
-	double numtot;
-	double denomtot;
+	int num1; //числитель первой дроби
+	int denom1; //знаменатель первой дроби
+	int num2; //числитель второй дроби
+	int denom2; //знаменатель второй дроби
+	int numtot;
+	int denomtot;
 public:
 	TFraction() : num1(0), denom1(0), num2(0), denom2(0)
 	{}
@@ -28,6 +28,16 @@ public:
 		cin >> denom2;
 		if (((denom2 = 0) || (num2 >= denom2))||((denom1 = 0) || (num1 >= denom1)))
 			return;
+		/*if (num1 % denom1 == 0)
+		{
+			denom1 = denom1 / num1;
+			num1 = num1 / num1;
+		}
+		if (num2 % denom2 == 0)
+		{
+			denom2 = denom2 / num2;
+			num2 = num2 / num2;
+		}*/
 	}
 	void operation()
 	{
