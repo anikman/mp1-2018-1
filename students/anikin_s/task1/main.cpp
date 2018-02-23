@@ -18,27 +18,49 @@ private:
 public:
 	TFraction() : num1(0), denom1(0), num2(0), denom2(0)
 	{}
+
+	TFraction &operator=(int _num1)
+	{
+		num1 = _num1;
+		return *this;
+	}
+
+	/*TFraction &operator=(int _num2)
+	{
+		num2 = _num2;
+		return *this;
+	}
+	
+	TFraction &operator=(int _denom1)
+	{
+		denom1 = _denom1;
+		return *this;
+	}
+
+	TFraction &operator=(int _denom2)
+	{
+		denom2 = _denom2;
+		return *this;
+	}*/
+
+	//остальные операторы присваивания класс игнорирует
+
 	void set()
 	{
+	in:
 		cout << "Введите числитель и знаменатель первой дроби (дробь дожна быть несократимой, а знаменатель не равен нулю)\n" << endl;
 		cin >> num1;
 		cin >> denom1;
 		cout << "Введите числитель и знаменатель второй дроби (дробь дожна быть несократимой, а знаменатель не равен нулю)\n" << endl;
 		cin >> num2; 
 		cin >> denom2;
-		if (((denom2 = 0) || (num2 >= denom2))||((denom1 = 0) || (num1 >= denom1)))
-			return;
-		/*if (num1 % denom1 == 0)
+		if ((denom2 == 0) || (num2 >= denom2) || (denom1 == 0) || (num1 >= denom1))
 		{
-			denom1 = denom1 / num1;
-			num1 = num1 / num1;
+			cout << "Неправильно введены данные. Попробуйте еще раз." << endl;
+			goto in;
 		}
-		if (num2 % denom2 == 0)
-		{
-			denom2 = denom2 / num2;
-			num2 = num2 / num2;
-		}*/
 	}
+
 	void operation()
 	{
 		char op;
@@ -80,11 +102,14 @@ public:
 			break;
 		}
 	}
+
 	void show()
 	{
 		cout << "Итог: " << numtot << "/" << denomtot << endl;
 	}
 };
+
+
 int main()
 {
 	setlocale(LC_ALL, "rus");
