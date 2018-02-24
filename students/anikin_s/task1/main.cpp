@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 #include <locale.h>
 
 using namespace std;
@@ -9,114 +9,163 @@ using namespace std;
 class TFraction
 {
 private:
-	int num1; //числитель первой дроби
-	int denom1; //знаменатель первой дроби
-	int num2; //числитель второй дроби
-	int denom2; //знаменатель второй дроби
-	int numtot;
-	int denomtot;
+	int num;
+	int denom;
+	int nod(int x, int y);
+	void total()
+	{
+		int q;
+		if (nod(abs(num), abs(denom)) > 1)
+		{
+			q = nod(abs(num), abs(denom));
+			num /= q;
+			denom /= q;
+		}
+	}
+	bool exist;
+	TFraction add(const TFraction& s);
+	TFraction subt(const TFraction& s);
+	TFraction mult(const TFraction& s);
+	TFraction dev(const TFraction& s);
 public:
-	TFraction() : num1(0), denom1(0), num2(0), denom2(0)
-	{}
-
-	TFraction &operator=(int _num1)
+	TFraction(int x, int y);
+	bool IsExist();
+	void Print();
+	TFraction operator=(const TFraction& s)
 	{
-		num1 = _num1;
+		num = s.num;
+		denom = s.denom;
+		return *this;
+	}
+	TFraction operator+=(const TFraction& s)
+	{
+		add(s);
+		return *this;
+	}
+	TFraction operator-=(const TFraction& s)
+	{
+		subt(s);
+		return *this;
+	}
+	TFraction operator*=(const TFraction& s)
+	{
+		mult(s);
+		return *this;
+	}
+	TFraction operator/= (const TFraction& s)
+	{
+		dev(s);
 		return *this;
 	}
 
-	/*TFraction &operator=(int _num2)
+	TFraction operator+(const TFraction& s)
 	{
-		num2 = _num2;
-		return *this;
+		TFraction a1(num *s.denom + s.num *denom, denom *s.denom);
+		return a1;
 	}
-	
-	TFraction &operator=(int _denom1)
+	TFraction operator-(const TFraction& s)
 	{
-		denom1 = _denom1;
-		return *this;
+		TFraction a1(num *s.denom - s.num * denom, denom *s.denom);
+		return a1;
 	}
-
-	TFraction &operator=(int _denom2)
+	TFraction operator*(const TFraction& s)
 	{
-		denom2 = _denom2;
-		return *this;
-	}*/
-
-	//остальные операторы присваивани€ класс игнорирует
-
-	void set()
-	{
-	in:
-		cout << "¬ведите числитель и знаменатель первой дроби (дробь дожна быть несократимой, а знаменатель не равен нулю)\n" << endl;
-		cin >> num1;
-		cin >> denom1;
-		cout << "¬ведите числитель и знаменатель второй дроби (дробь дожна быть несократимой, а знаменатель не равен нулю)\n" << endl;
-		cin >> num2; 
-		cin >> denom2;
-		if ((denom2 == 0) || (num2 >= denom2) || (denom1 == 0) || (num1 >= denom1))
-		{
-			cout << "Ќеправильно введены данные. ѕопробуйте еще раз." << endl;
-			goto in;
-		}
+		TFraction a1(num *s.num, denom *s.denom);
+		return a1;
 	}
-
-	void operation()
+	TFraction operator/(const TFraction& s)
 	{
-		char op;
-		cout << "¬ыберите операцию: сложение(+), вычитание(-), умножение(*) или деление(:)\n";
-		cin >> op;
-		switch (op)
-		{
-		case '+':
-			if (denom1 == denom2)
-			{
-				numtot = num1 + num2;
-				denomtot = denom1;
-			}
-			else
-			{
-				denomtot = denom1 * denom2;
-				numtot = (num1 * denom2) + (num2 * denom1);
-			}
-			break;
-		case '-':
-			if (denom1 == denom2)
-			{
-				numtot = num1 - num2;
-				denomtot = denom1;
-			}
-			else
-			{
-				denomtot = denom1 * denom2;
-				numtot = (num1 * denom2) - (num2 * denom1);
-			}
-			break;
-		case '*':
-			numtot = num1 * num2;
-			denomtot = denom1 * denom2;
-			break;
-		case ':':
-			numtot = num1 * denom2;
-			denomtot = denom1 * num2;
-			break;
-		}
-	}
-
-	void show()
-	{
-		cout << "»тог: " << numtot << "/" << denomtot << endl;
+		TFraction a1(num *s.denom, denom *s.num);
+		return a1;
 	}
 };
-
-
-int main()
+TFraction::TFraction(int x, int y)
+{
+	num = x;
+	if (y != 0)
+	{
+		exist = true;
+		denom = y;
+		total();
+	}
+	else
+		exist = false;
+}
+TFraction TFraction::add(const TFraction& s)
+{
+	num = num * s.denom + s.num *denom;
+	denom *= s.denom;
+	total();
+	TFraction a1(num, denom);
+	return a1;
+}
+TFraction TFraction::subt(const TFraction& s)
+{
+	num = num * s.denom - s.num *denom;
+	denom *= s.denom;
+	total();
+	TFraction a1(num, denom);
+	return a1;
+}
+TFraction TFraction::mult(const TFraction& s)
+{
+	num *= s.num;
+	denom *= s.denom;
+	total();
+	TFraction a1(num, denom);
+	return a1;
+}
+TFraction TFraction::dev(const TFraction& s)
+{
+	num *= s.denom;
+	denom *= s.num;
+	total();
+	TFraction a1(num, denom);
+	return a1;
+}
+int TFraction::nod(int x, int y)
+{
+	int n = 1;
+	for (int i = x; i > 0; i--)
+	{
+		if ((x % i == 0) && (y % i == 0))
+		{
+			n = i;
+			break;
+		}
+	}
+	return n;
+}
+bool TFraction::IsExist()
+{
+	return exist;
+}
+void TFraction::Print()
+{
+	cout << "" << num << "/" << denom << endl;
+}
+void main()
 {
 	setlocale(LC_ALL, "rus");
-	TFraction a1;
-	a1.set();
-	a1.operation();
-	a1.show();
+	int p, l, m, j;
+	cout << "¬ведите числитель и знаменатель первой дроби" << endl;
+	cin >> p;
+	cin >> l;
+	cout << "¬ведите числитель и знаменатель первой дроби" << endl;
+	cin >> m;
+	cin >> j;
+	TFraction a(p,l);
+	TFraction s(m,j);
+	if (a.IsExist() && s.IsExist())
+	{
+		(a+s).Print();
+		cout << "\n";
+		(a-s).Print();
+		cout << "\n";
+		(a*s).Print();
+		cout << "\n";
+		(a / s).Print();
+		cout << "\n";
+	}
 	system("pause");
-	return 0;
- }
+}
