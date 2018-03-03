@@ -1,7 +1,9 @@
-﻿#include <stdio.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
 #include <iostream>
 #include <cmath>
 #include <locale.h>
+#include <cstring>
 
 
 using namespace std;
@@ -19,7 +21,7 @@ public:
 		for (int i = 0; i <= n; i++)
 			a[i] = _a[i];
 	}
-	TPolinom operator=(const TPolinom&s)
+	TPolinom &operator=(const TPolinom&s)
 	{
 		if (this == &s)
 			return *this;
@@ -28,6 +30,29 @@ public:
 			delete[] a;
 			a = new double[s.n + 1];
 		}
+		a = s.a;
+		n = s.n;
+		return *this;
+	}
+	void Out()
+	{
+		for (int i = n; i >= 0; i--)
+		{
+			if (a > 0)
+			{
+				if (i == n)
+					cout << "" << a[i] << "x^" << i << " ";
+				else
+					cout << "+" << a[i] << "x^" << i << " ";
+			}
+			if (a < 0)
+				cout << "-" << abs(a[i]) << "x^" << i << " ";
+		}
+		cout << "\n";
+	}
+	int Out_n()
+	{
+		return n;
 	}
 	double Find_a(int i)
 	{
@@ -44,28 +69,16 @@ public:
 		}
 		return total;
 	}
-	void Diff()
+	TPolinom Diff()
 	{
 		double *new_a;
-		new_a = new double[n+1];
+		new_a = new double[n + 1];
 		for (int i = n; i > 0; i--)
 		{
 			new_a[i] = a[i] * i;
 		}
-		for (int i = n-1; i >= 0; i--)
-		{
-			if (a > 0)
-			{
-				if (i == n-1)
-					cout << "" << new_a[i + 1] << "x^" << i << " ";
-				else
-					cout << "+" << new_a[i + 1] << "x^" << i << " ";
-			}
-			if (a < 0)
-				cout << "-" << abs(new_a[i + 1]) << "x^" << i << " ";
-		}
-		cout << "\n";
-		delete[] new_a;
+		TPolinom dif(n - 1, new_a);
+		return dif;
 	}
 	~TPolinom();
 };
@@ -92,34 +105,27 @@ int main()
 
 	TPolinom sa(n, a);
 
-	cout << "Ваш текущий полином: ";
-	for (int i = n; i >= 0; i--)
-	{
-		if (a > 0)
-		{
-			if (i == n)
-				cout << "" << a[i] << "x^" << i << " ";
-			else
-				cout << "+" << a[i] << "x^" << i << " ";
-		}
-		if (a < 0)
-			cout << "-" << abs(a[i]) << "x^" << i << " ";
-	}
-	cout << "\n";
-	cout << "Для вывода степени полинома введите 1" << endl;
-	cout << "Для того, чтобы узнать коэффициент по его порядковому номеру, введите 2" << endl;
-	cout << "Для вычисления значения полинома в определенной точке Х введите 3" << endl;
-	cout << "Для нахождения производной полинома введите 4" << endl;
+	cout << "Для вывода полинома на экран введите 1" << endl;
+	cout << "Для вывода степени полинома введите 2" << endl;
+	cout << "Для того, чтобы узнать коэффициент по его порядковому номеру, введите 3" << endl;
+	cout << "Для вычисления значения полинома в определенной точке Х введите 4" << endl;
+	cout << "Для нахождения производной полинома введите 5" << endl;
 	cin >> op;
 	switch (op)
 	{
 	case 1:
 	{
-		cout << "Степень полинома = " << n << endl;
+		sa.Out();
 		system("pause");
 		break;
 	}
 	case 2:
+	{
+		cout << "Степень полинома = " << sa.Out_n() << endl;
+		system("pause");
+		break;
+	}
+	case 3:
 	{
 		int i = 0;
 		cout << "Введите порядковый номер коэффициента" << endl;
@@ -129,7 +135,7 @@ int main()
 		system("pause");
 		break;
 	}
-	case 3:
+	case 4:
 	{
 		int x;
 		cout << "Введите Х" << endl;
@@ -139,9 +145,10 @@ int main()
 		system("pause");
 		break;
 	}
-	case 4:
+	case 5:
 	{
-		sa.Diff();
+		TPolinom D = sa.Diff();
+		D.Out();
 		cout << "\n";
 		system("pause");
 		break;
