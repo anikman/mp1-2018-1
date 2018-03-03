@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
@@ -148,19 +148,19 @@ void main()
 {
 	setlocale(LC_ALL, "rus");
 	int p, l, m, j;
-	cout << "Ââåäèòå ÷èñëèòåëü è çíàìåíàòåëü ïåðâîé äðîáè" << endl;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒ Ð¸ Ð·Ð½Ð°Ð¼ÐµÐ½Ð°Ñ‚ÐµÐ»ÑŒ Ð¿ÐµÑ€Ð²Ð¾Ð¹ Ð´Ñ€Ð¾Ð±Ð¸" << endl;
 	cin >> p;
 	cin >> l;
-	cout << "Ââåäèòå ÷èñëèòåëü è çíàìåíàòåëü ïåðâîé äðîáè" << endl;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒ Ð¸ Ð·Ð½Ð°Ð¼ÐµÐ½Ð°Ñ‚ÐµÐ»ÑŒ Ð²Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð´Ñ€Ð¾Ð±Ð¸" << endl;
 	cin >> m;
 	cin >> j;
-	TFraction a(p,l);
-	TFraction s(m,j);
+	TFraction a(p, l);
+	TFraction s(m, j);
 	if (a.IsExist() && s.IsExist())
 	{
-		(a+s).Print();
+		(a + s).Print();
 		cout << "\n";
-		(a-s).Print();
+		(a - s).Print();
 		cout << "\n";
 		(a*s).Print();
 		cout << "\n";
