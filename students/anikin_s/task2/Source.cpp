@@ -73,9 +73,9 @@ public:
 	{
 		double *new_a;
 		new_a = new double[n + 1];
-		for (int i = n; i > 0; i--)
+		for (int i = n; i >= 0; i--)
 		{
-			new_a[i] = a[i] * i;
+			new_a[i] = a[i+1] * (i+1);
 		}
 		TPolinom dif(n - 1, new_a);
 		return dif;
