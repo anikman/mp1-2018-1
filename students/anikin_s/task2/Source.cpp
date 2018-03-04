@@ -69,19 +69,23 @@ public:
 		}
 		return total;
 	}
-	TPolinom Diff()
-	{
-		double *new_a;
-		new_a = new double[n + 1];
-		for (int i = n; i >= 0; i--)
-		{
-			new_a[i] = a[i+1] * (i+1);
-		}
-		TPolinom dif(n - 1, new_a);
-		return dif;
-	}
+	TPolinom Diff();
 	~TPolinom();
 };
+
+TPolinom TPolinom::Diff()
+{
+	double *ad;
+	int tmp;
+	tmp = n;
+	ad = new double[n + 1];
+	for (int i = tmp; i > 0; i--)
+	{
+		ad[i] = a[i] * i;
+	}
+	TPolinom dif(tmp - 1, ad);
+	return dif;
+}
 
 TPolinom :: ~TPolinom()
 {
@@ -147,8 +151,8 @@ int main()
 	}
 	case 5:
 	{
-		TPolinom D = sa.Diff();
-		D.Out();
+		TPolinom sa1 = sa.Diff();
+		sa1.Out();
 		cout << "\n";
 		system("pause");
 		break;
