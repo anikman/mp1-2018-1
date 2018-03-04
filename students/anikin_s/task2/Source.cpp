@@ -21,15 +21,17 @@ public:
 		for (int i = 0; i <= n; i++)
 			a[i] = _a[i];
 	}
-	TPolinom &operator=(const TPolinom&s)
+	TPolinom operator=(const TPolinom&s)
 	{
 		if (this == &s)
 			return *this;
 		if (n != s.n)
 		{
 			delete[] a;
-			a = new double[s.n + 1];
+			a = new double[n + 1];
 		}
+		for (int i = 0; i <= n; i++)
+			a[i] = s.a[i];
 		a = s.a;
 		n = s.n;
 		return *this;
@@ -69,28 +71,24 @@ public:
 		}
 		return total;
 	}
-	TPolinom Diff();
-	~TPolinom();
-};
-
-TPolinom TPolinom::Diff()
-{
-	double *ad;
-	int tmp;
-	tmp = n;
-	ad = new double[n + 1];
-	for (int i = tmp; i > 0; i--)
+	TPolinom Diff()
 	{
-		ad[i-1] = a[i] * i;
+		double *ad;
+		int tmp;
+		tmp = n;
+		ad = new double[n + 1];
+		for (int i = tmp; i > 0; i--)
+		{
+			ad[i - 1] = a[i] * i;
+		}
+		TPolinom dif(tmp - 1, ad);
+		return dif;
 	}
-	TPolinom dif(tmp - 1, ad);
-	return dif;
-}
-
-TPolinom :: ~TPolinom()
-{
-	delete[] a;
-}
+	~TPolinom()
+	{
+		delete[] a;
+	}
+};
 
 int main()
 {
@@ -151,7 +149,7 @@ int main()
 	}
 	case 5:
 	{
-		TPolinom sa1 = sa.Diff();
+		TPolinom sa1(sa.Diff());
 		sa1.Out();
 		cout << "\n";
 		system("pause");
