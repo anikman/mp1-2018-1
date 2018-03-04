@@ -81,7 +81,7 @@ TPolinom TPolinom::Diff()
 	ad = new double[n + 1];
 	for (int i = tmp; i > 0; i--)
 	{
-		ad[i] = a[i] * i;
+		ad[i-1] = a[i] * i;
 	}
 	TPolinom dif(tmp - 1, ad);
 	return dif;
