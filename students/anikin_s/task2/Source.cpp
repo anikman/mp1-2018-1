@@ -14,7 +14,7 @@ private:
 	int n;
 	double *a;
 public:
-	TPolinom(int _n, double *_a) : n(_n), a(_a)
+	TPolinom(int _n, double *_a)
 	{
 		n = _n;
 		a = new double[n + 1];
@@ -32,9 +32,14 @@ public:
 		}
 		for (int i = 0; i <= n; i++)
 			a[i] = s.a[i];
-		a = s.a;
-		n = s.n;
 		return *this;
+	}
+	TPolinom(const TPolinom&s)
+	{
+		n = s.n;
+		a = new double[n + 1];
+		for (int i = 0; i <= n; i++)
+			a[i] = s.a[i];
 	}
 	void Out()
 	{
